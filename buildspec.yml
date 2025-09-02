@@ -1,0 +1,35 @@
+version: 0.2
+
+env:
+  variables:
+    # Add any build-time vars you want here
+  # Cache speeds up subsequent builds
+cache:
+  paths:
+    - 'node_modules/**/*'
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - echo "Installing dependencies..."
+      - npm ci
+  build:
+    commands:
+      - echo "Running build..."
+      - npm run build
+  post_build:
+    commands:
+      - echo "Build completed. Preparing artifacts for Elastic Beanstalk..."
+
+artifacts:
+  # Only ship the files EB needs. CodePipeline will zip these automatically.
+  files:
+    - Procfile
+    - package.json
+    - server.js
+    - .ebextensions/**/*        # optional but useful for env/config
+    - dist/**/*                 # built assets
+  discard-paths: no
+
