@@ -1,9 +1,6 @@
 version: 0.2
 
-env:
-  variables:
-    # Add any build-time vars you want here
-  # Cache speeds up subsequent builds
+
 cache:
   paths:
     - 'node_modules/**/*'
